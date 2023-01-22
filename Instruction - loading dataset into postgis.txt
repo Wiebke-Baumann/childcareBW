@@ -1,0 +1,23 @@
+Connecting new server in pgAdmin:
+
+1. "docker-compose up" on the folder assignment_3_works_Version1
+2. open pgAdmin & connect the new server:
+	2.1 log into pgAdmin with your normal password
+	2.2 rightclick on Servers -> Register -> Server
+	2.3 put in Name = GIS_project_Version1, Hostname/address = localhost, username = gis_user, password = gis_pass
+	2.4 don't change any of the other information that is already written into the fields!
+	
+Importing the kindergarten data set to PostGIS/PostSQL
+
+1. open the OSGeo4W Shell (can be found by going to the folder where you stored PostGIS (e.g. mine is in the following path: "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\QGIS 3.28.2\OSGeo4W Shell.lnk"))
+2. the Shell is called "OSGeo4W.bat" or "OSGeo4W Shell-> open it
+3. run the following command in the shell (you only have to change the path to the kindergarten-dataset, don't change the username, password etc!):
+   The combined_dataset_kindergartens.geojson is stored in assignment_3_works_Version1\database, just the rest of the path.
+
+ogr2ogr -f "PostgreSQL" PG:"dbname=gis_db, user=gis_user password=gis_pass" "/Users/sophi/Documents/Project/assignment_3_works_Version1/database/combined_dataset_kindergartens.geojson" -nln kindergartens
+
+note: for me, nothing happened in the shell, but the data is imported!
+
+4. click "refresh" on the gis_db in pgAdmin6. now you should find the "kindergartens" table in pgAdmin under gis_db -> Schemas -> public -> Tables
+
+5. now you should be able to access the data via queries & find the application under localhost:4200! You should be able to press the button "Add Pubs" and the kindergarten markers should show up
