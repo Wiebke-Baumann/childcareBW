@@ -21,12 +21,8 @@ export class AppComponent {
    */
   constructor(private dataservice: DataService) {}
 
-  /**
-   * @param $event add marker on the map at the specified latitude and longitude
-   */
-  onAddMarker($event: { latitude: number; longitude: number }) {
-    this.map.addMarker($event.latitude, $event.longitude);
-  }
+  
+  
 
   /*
    * Retrieve pubs from backend and override the member variable.
