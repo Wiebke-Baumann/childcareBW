@@ -12,15 +12,6 @@ def pubs():
     query = """SELECT points.name, ST_Y(points.wkb_geometry) as latitude , ST_X(points.wkb_geometry) as longitude
 FROM kindergartens points"""
 
-# """WITH konstanz AS (
-#     SELECT way
-#     FROM planet_osm_polygon
-#     WHERE admin_level='8' and name = 'Konstanz'
-# )
-# SELECT points.name, ST_Y(points.way) as latitude , ST_X(points.way) as longitude
-# from planet_osm_point points join konstanz on st_contains(konstanz.way, points.way)
-# where points.amenity in ('bar', 'pub')
-# """
     
     with psycopg2.connect(host=os.getenv('POSTGRES_HOST'), port=5432, dbname=os.getenv('POSTGRES_DB'), user=os.getenv('POSTGRES_USER'), password=os.getenv('POSTGRES_PASS')) as conn:
         with conn.cursor() as cursor:

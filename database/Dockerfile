@@ -8,5 +8,7 @@ RUN apt-get install -y osm2pgsql wget
 
 RUN mkdir -p /importdata
 
-COPY combined_dataset_kindergartens.geojson /importdata/combined_dataset_kindergartens.geojson
+COPY gridcells_final.geojson /importdata/gridcells_final.geojson
+COPY kindergartens_final.geojson /importdata/kindergartens_final.geojson
+
 COPY import_script.sh /docker-entrypoint-initdb.d/import_script.sh
