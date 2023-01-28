@@ -13,7 +13,7 @@ export class AppComponent {
   @ViewChild(MapComponent) map!: MapComponent;
 
   // option 2: use @Input() in the child component
-  amenities: { name: string; latitude: number; longitude: number }[] = [];
+  amenities: { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[] = [];
 
   /*
    * Services or other dependencies are often imported via dependency injection.

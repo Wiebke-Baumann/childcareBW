@@ -14,15 +14,17 @@ export class MapComponent implements OnInit {
     name: string;
     latitude: number;
     longitude: number;
+    children_kiga_age: number;
+    occupancy_rate: number;
   }[] = [];
 
-  get amenities(): { name: string; latitude: number; longitude: number }[] {
+    get amenities(): {name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[] {
     return this._amenities;
   }
 
   @Input()
-  set amenities(
-    value: { name: string; latitude: number; longitude: number }[]
+    set amenities(
+    value: {name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[]
   ) {
     this._amenities = value;
     this.updateAmenitiesLayer();
@@ -36,9 +38,9 @@ export class MapComponent implements OnInit {
     // remove old amenities
     this.map.removeLayer(this.amenitiesLayer);
 
-    // create a marker for each supplied amenity
+    // !create a marker for each supplied amenity
     const markers = this.amenities.map((a) =>
-      L.marker([a.latitude, a.longitude]).bindPopup(a.name)
+      L.circleMarker([a.latitude, a.longitude]).bindPopup('<b>' + 'Name: ' + '</b>' + a.name + '<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
     );
 
     // create a new layer group and add it to the map
@@ -51,23 +53,7 @@ export class MapComponent implements OnInit {
    * Often divs and other HTML element are not available in the constructor. Thus we use onInit()
    */
   ngOnInit(): void {
-    // some settings for a nice shadows, etc.
-    const iconRetinaUrl = './assets/marker-icon-2x.png';
-    const iconUrl = './assets/marker-icon.png';
-    const shadowUrl = './assets/marker-shadow.png';
-    const iconDefault = L.icon({
-      iconRetinaUrl,
-      iconUrl,
-      shadowUrl,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      tooltipAnchor: [16, -28],
-      shadowSize: [41, 41],
-    });
-
-    L.Marker.prototype.options.icon = iconDefault;
-
+ 
     // basic setup, create a map in the div with the id "map"
     this.map = L.map('map').setView([47.66, 9.175], 13);
 
@@ -80,17 +66,15 @@ export class MapComponent implements OnInit {
 
   /**
    * Add a marker at the specified position to the map.
-   * If a name is provided, also include a popup when marker is clicked.
    * @param latitude
    * @param longitude
    * @param name
+   * @param children_kiga_age
+   * @param occupancy_rate
    */
-  public addMarker(latitude: number, longitude: number, name?: string): void {
-    const marker = L.marker([latitude, longitude]);
 
-    if (name) {
-      marker.bindPopup(name);
-    }
+  public addMarker(latitude: number, longitude: number, children_kiga_age: number, occupancy_rate: number, name: string): void {
+    const marker = L.marker([latitude, longitude]).bindPopup(name + children_kiga_age + occupancy_rate);
 
     marker.addTo(this.map);
   }
