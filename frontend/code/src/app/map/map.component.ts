@@ -38,17 +38,21 @@ export class MapComponent implements OnInit {
     // remove old amenities
     this.map.removeLayer(this.amenitiesLayer);
 
-    // !create a marker for each supplied amenity
+    
+    // create a marker for each supplied amenity
     const markers = this.amenities.map((a) =>
-      L.circleMarker([a.latitude, a.longitude]).bindPopup('<b>' + 'Name: ' + '</b>' + a.name + '<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
+      L.circleMarker([a.latitude, a.longitude], {fillColor: this.choseColors(a.occupancy_rate)})
+      .bindPopup('<b>' + 'Name: ' + '</b>' + a.name + '<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
     );
 
+    
     // create a new layer group and add it to the map
     this.amenitiesLayer = L.layerGroup(markers);
     markers.forEach((m) => m.addTo(this.amenitiesLayer));
     this.map.addLayer(this.amenitiesLayer);
   }
 
+  
   /**
    * Often divs and other HTML element are not available in the constructor. Thus we use onInit()
    */
@@ -64,6 +68,7 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
   }
 
+
   /**
    * Add a marker at the specified position to the map.
    * @param latitude
@@ -78,4 +83,28 @@ export class MapComponent implements OnInit {
 
     marker.addTo(this.map);
   }
+/**
+ * Select the color for the marker according to the occupancy rate value
+ * @param occupancy_rate
+ *  
+ */
+  public choseColors(occupancy_rate: number) {
+    let colorMarker = "";
+      if (occupancy_rate < 1) {
+        colorMarker = "green";
+      }
+
+      else if (occupancy_rate === 1) {
+        colorMarker = "yellow";
+      }
+
+      else {
+        colorMarker = "red";
+      }
+
+      return colorMarker;
+
+  }
 }
+
+
