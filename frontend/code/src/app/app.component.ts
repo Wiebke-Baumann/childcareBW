@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MapComponent } from './map/map.component';
 import { DataService } from './services/data.service';
+import {FeatureCollection} from 'geojson'
 
 @Component({
   selector: 'app-root',
@@ -32,4 +33,11 @@ export class AppComponent {
       this.amenities = pubs;
     });
   }
+
+  onChoroAdded(): void{
+    this.dataservice.choropleth().subscribe(geojson: FeatureCollection)=>{
+      this.map.addGeoJson(geojson)
+    }
+  }
+  
 }
