@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { Feature, FeatureCollection, Geometry } from 'geojson';
+import * as d3 from 'd3';
+
+
 
 @Component({
   selector: 'app-map',
@@ -105,6 +109,52 @@ export class MapComponent implements OnInit {
       return colorMarker;
 
   }
-}
+  /**
+   * Add a GeoJSON FeatureCollection to this map
+   * @param latitude
+   */
+  public addGeoJSON(geojson: FeatureCollection): void {
+    // each feature gets an additional popup!
+    const onEachFeature = (feature: Feature<Geometry, any>, layer: L.Layer) => {
+      if (
+        feature.properties &&
+        typeof feature.properties.index !== 'undefined'
+      ) {
+        layer.bindPopup(
+          `${feature.properties.id} has ${feature.properties.index} bar${
+            feature.properties.index > 0 ? 's' : ''
+          }`
+        );
+      }
+    };
+
+    const colorscale = d3.scaleLinear().domain([0, 6]);
+
+    // each feature has a custom color
+    const style = (feature: Feature<Geometry, any> | undefined) => {
+      const numbars = feature?.properties?.index
+        ? feature.properties.numbars
+        : 0;
+
+      const color = d3.interpolatePlasma(colorscale(numbars));
+
+      return {
+        fillColor: color,
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7,
+      };
+    };
+
+    const geoJSON = L.geoJSON(geojson, {
+      onEachFeature,
+      style,
+    });
+    geoJSON.addTo(this.map);
+  }
+} 
+
 
 
