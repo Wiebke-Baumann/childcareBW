@@ -35,9 +35,9 @@ export class AppComponent {
   }
 
   onChoroAdded(): void{
-    this.dataservice.choropleth().subscribe(geojson: FeatureCollection)=>{
-      this.map.addGeoJson(geojson)
-    }
-  }
+    this.dataservice.choropleth().subscribe((geojson: FeatureCollection) =>{
+      this.map.addGeoJson(geojson);
+    });
+  };
   
 }
