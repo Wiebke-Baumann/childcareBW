@@ -105,6 +105,8 @@ export class MapComponent implements OnInit {
       return colorMarker;
 
   }
+
+ 
 }
 
 

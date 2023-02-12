@@ -16,6 +16,7 @@ export class AppComponent {
   // option 2: use @Input() in the child component
   amenities: { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[] = [];
 
+
   /*
    * Services or other dependencies are often imported via dependency injection.
    * See https://angular.io/guide/dependency-injection for more details.
@@ -33,11 +34,15 @@ export class AppComponent {
       this.amenities = pubs;
     });
   }
-
-  onChoroAdded(): void{
-    this.dataservice.choropleth().subscribe((geojson: FeatureCollection) =>{
-      this.map.addGeoJson(geojson);
-    });
-  };
   
+
+  public isMenuOpen : boolean = false;
+
+  public onSidenavClick(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+
+  }
+
+
+
 }

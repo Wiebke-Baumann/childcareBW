@@ -1,6 +1,6 @@
 #settings-panel {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   margin: 10px;
 }
@@ -21,6 +21,8 @@
   margin-left: auto;
   margin-right: 25px;
 }
+
+
 
 ::ng-deep .mat-form-field-wrapper {
   margin-bottom: -1.25em;

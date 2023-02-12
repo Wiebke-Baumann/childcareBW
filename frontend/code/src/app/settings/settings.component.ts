@@ -1,14 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent {
-  // this output can be listened to in the parent component
-  
+export class SettingsComponent {  
 
   // this output can be listened to in the parent component
   @Output()
@@ -17,10 +15,19 @@ export class SettingsComponent {
 
   // location form stores and validates the inputs from our forms defined in the html document
   
-  
-
-  
   addPubs(): void {
     this.pubsAdded.emit(true);
   }
+  // For the Sidenavigation
+  
+  @Output()
+  isMenuOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  toggleSidenav(): void{
+    this.isMenuOpen.emit(true);
+  }
+
+ 
+
+  
 }

@@ -1,4 +1,21 @@
 <div id="app">
-  <app-settings (pubsAdded)="onPubsAdded()"> </app-settings>
-  <app-map [amenities]="this.amenities"> </app-map>
+  <app-settings (pubsAdded)="onPubsAdded()" (isMenuOpen)="onSidenavClick()"> </app-settings>
+<mat-sidenav-container>
+
+  <mat-sidenav mode="side" [(opened)]="isMenuOpen" class="sidenav" (click)="onSidenavClick()">
+    <h1>
+      Childcare infrastructure in Baden Württemberg
+    </h1>
+    
+    Created by Elena, Nele and Wiebke
+    <br>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    
+      <app-map [amenities]="this.amenities"> </app-map>
+  </mat-sidenav-content>
+  
+</mat-sidenav-container>
 </div>

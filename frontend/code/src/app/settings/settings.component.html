@@ -1,4 +1,7 @@
 <div id="settings-panel">
+    <button mat-button class="menu-button" (click)="toggleSidenav()">
+      <mat-icon>{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
+    </button>
 
   <div class="pubs">
     <button class="button" (click)="addPubs()" color="primary" mat-stroked-button>Show Kindergartens</button>
@@ -6,6 +9,11 @@
     <button class ="button" color="primary" mat-stroked-button>Show Population</button>
 
   </div>
+  
+  
 </div>
 
+<!--
+        
+-->
 

@@ -5,10 +5,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+
 // angular material
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatSidenavModule} from '@angular/material/sidenav'; 
+import {MatIconModule} from '@angular/material/icon'; 
+
+
 
 // own components
 import { AppComponent } from './app.component';
@@ -22,12 +28,18 @@ import { SettingsComponent } from './settings/settings.component';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
+    MatDividerModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSidenavModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
+
+
 export class AppModule {}
