@@ -31,7 +31,7 @@ export class DataService {
   /**
    * Get Cells
    */
-   public getchoropleth(): Observable<FeatureCollection> {
+   public getIndex(): Observable<FeatureCollection> {
     const url = 'http://localhost:5000/choropleth';
     return this.http.post<FeatureCollection>(url, {}, httpOptions);
   }

@@ -128,7 +128,7 @@ export class MapComponent implements OnInit {
       }
     };
 
-    const colorscale = d3.scaleLinear().domain([0, 6]);
+    const colorscale = d3.scaleLinear().domain([0, 4]);
 
     // each feature has a custom color
     const style = (feature: Feature<Geometry, any> | undefined) => {

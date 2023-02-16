@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 import json
+import re
 
 import psycopg2
 
@@ -36,12 +37,13 @@ FROM gridcells'''
     for result in results:
         geojsons.append({
             "type": "Feature",
-            "id": result["id"],
+            "id": result[0],
             "properties": {
                 
-                "index": float(result['childcare_index'])
+                "index": float(result[2])
             },
-            "geometry": json.loads(result['geometry'])
+            "geometry": json.loads(result[1])
+
         })
 
     return jsonify({

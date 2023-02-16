@@ -16,11 +16,13 @@ export class SettingsComponent {
 
 
   // location form stores and validates the inputs from our forms defined in the html document
-  
-  
-
-  
   addPubs(): void {
     this.pubsAdded.emit(true);
+  }
+
+  @Output()
+  indexAdded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  addIndex(): void{
+    this.indexAdded.emit(true);
   }
 }
