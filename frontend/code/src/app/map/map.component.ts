@@ -109,7 +109,10 @@ export class MapComponent implements OnInit {
       return colorMarker;
 
   }
+
   /**
+   * Code for Index Coropleth Map
+   * 
    * Add a GeoJSON FeatureCollection to this map
    * @param latitude
    */
@@ -120,23 +123,20 @@ export class MapComponent implements OnInit {
         feature.properties &&
         typeof feature.properties.index !== 'undefined'
       ) {
-        layer.bindPopup(
-          `${feature.properties.id} has ${feature.properties.index} bar${
-            feature.properties.index > 0 ? 's' : ''
-          }`
-        );
+        layer.bindPopup('<b>' + 'Id: ' + '</b>' + feature.id + '<br>' + '<b>' + "Index:" + '</b>' + feature.properties.index)
+
+        ;
       }
     };
 
-    const colorscale = d3.scaleLinear().domain([0, 4]);
+    const colorscale = d3.scaleLinear().domain([0, 6]);
 
     // each feature has a custom color
     const style = (feature: Feature<Geometry, any> | undefined) => {
-      const numbars = feature?.properties?.index
-        ? feature.properties.numbars
-        : 0;
+      const index = feature?.properties?.index;
+        
 
-      const color = d3.interpolatePlasma(colorscale(numbars));
+      const color = d3.interpolateBuGn(colorscale(index));
 
       return {
         fillColor: color,
