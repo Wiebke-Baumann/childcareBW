@@ -117,7 +117,7 @@ export class MapComponent implements OnInit {
    * @param latitude
    */
   public addGeoJSON(geojson: FeatureCollection): void {
-    // each feature gets an additional popup!
+    // popup for each cell
     const onEachFeature = (feature: Feature<Geometry, any>, layer: L.Layer) => {
       if (
         feature.properties &&
@@ -129,15 +129,17 @@ export class MapComponent implements OnInit {
       }
     };
 
+    // rescaling to 0,1
     const colorscale = d3.scaleLinear().domain([0, 6]);
 
     // each feature has a custom color
     const style = (feature: Feature<Geometry, any> | undefined) => {
       const index = feature?.properties?.index;
         
-
+      // the color scale
       const color = d3.interpolateBuGn(colorscale(index));
 
+      // tbh I am not sure what this does 
       return {
         fillColor: color,
         weight: 2,
