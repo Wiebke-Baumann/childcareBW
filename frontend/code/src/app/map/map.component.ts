@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
+
 export class MapComponent implements OnInit {
   private map!: L.Map;
   private amenitiesLayer: L.LayerGroup<any> = L.layerGroup();
@@ -41,7 +43,7 @@ export class MapComponent implements OnInit {
     
     // create a marker for each supplied amenity
     const markers = this.amenities.map((a) =>
-      L.circleMarker([a.latitude, a.longitude], {fillColor: this.choseColors(a.occupancy_rate)})
+      L.circleMarker([a.latitude, a.longitude], {color: this.choseColors(a.occupancy_rate), fillOpacity: 1})
       .bindPopup('<b>' + 'Name: ' + '</b>' + a.name + '<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
     );
 
@@ -50,6 +52,35 @@ export class MapComponent implements OnInit {
     this.amenitiesLayer = L.layerGroup(markers);
     markers.forEach((m) => m.addTo(this.amenitiesLayer));
     this.map.addLayer(this.amenitiesLayer);
+  }
+
+  /**
+ * Select the color for the marker according to the occupancy rate value
+ * @param occupancy_rate
+ *  
+ */
+  public choseColors(occupancy_rate: number) {
+    let colorMarker = "";
+      // kindergartens that are not overcrowded
+      if (occupancy_rate < 1) {
+        colorMarker = "#6FCB9F";
+      }
+      // slightly overcrowded kindergartens
+      else if (occupancy_rate > 1 && occupancy_rate < 1.2) {
+        colorMarker = "#FFFEB3";
+      }
+
+      // medium overcrowded kindergartens
+      else if (occupancy_rate > 1.2 && occupancy_rate < 2) {
+        colorMarker = "#FE9076";
+      }
+
+      // strongly overcrowded kindergartens
+      else {
+        colorMarker = "#FB2E01";
+      }
+
+      return colorMarker;
   }
 
   
@@ -80,31 +111,13 @@ export class MapComponent implements OnInit {
 
   public addMarker(latitude: number, longitude: number, children_kiga_age: number, occupancy_rate: number, name: string): void {
     const marker = L.marker([latitude, longitude]).bindPopup(name + children_kiga_age + occupancy_rate);
-
     marker.addTo(this.map);
-  }
-/**
- * Select the color for the marker according to the occupancy rate value
- * @param occupancy_rate
- *  
- */
-  public choseColors(occupancy_rate: number) {
-    let colorMarker = "";
-      if (occupancy_rate < 1) {
-        colorMarker = "green";
-      }
-
-      else if (occupancy_rate === 1) {
-        colorMarker = "yellow";
-      }
-
-      else {
-        colorMarker = "red";
-      }
-
-      return colorMarker;
+    }
 
   }
-}
+    
+
+
+
 
 
