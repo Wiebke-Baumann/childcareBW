@@ -1,6 +1,7 @@
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
+import json
 
 import psycopg2
 
@@ -20,3 +21,29 @@ def pubs():
             results = cursor.fetchall()
     
     return jsonify([{'name': r[0], 'latitude': r[1], 'longitude': r[2], 'children_kiga_age': r[3], 'occupancy_rate': r[4]} for r in results]), 200
+
+@app.route('/choropleth', methods=["GET", "POST"])
+def choropleth():
+    query = '''SELECT id_1km as id, st_asgeojson(wkb_geometry) as geometry, childcare_index
+FROM gridcells'''
+
+    
+    with psycopg2.connect(host=os.getenv('POSTGRES_HOST'), port=5432, dbname=os.getenv('POSTGRES_DB'), user=os.getenv('POSTGRES_USER'), password=os.getenv('POSTGRES_PASS')) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(query)
+            results = cursor.fetchall()
+    geojsons = []
+    for result in results:
+        geojsons.append({
+            "type": "Feature",
+            "id": result["id"],
+            "properties": {
+                
+                "index": float(result['childcare_index'])
+            },
+            "geometry": json.loads(result['geometry'])
+        })
+
+    return jsonify({
+        "type": "FeatureCollection", "features": geojsons
+    }), 200

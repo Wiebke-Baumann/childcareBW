@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MapComponent } from './map/map.component';
 import { DataService } from './services/data.service';
+import {FeatureCollection} from 'geojson'
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
 
   // option 2: use @Input() in the child component
   amenities: { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[] = [];
+
 
   /*
    * Services or other dependencies are often imported via dependency injection.
@@ -32,4 +34,15 @@ export class AppComponent {
       this.amenities = pubs;
     });
   }
+  
+
+  public isMenuOpen : boolean = false;
+
+  public onSidenavClick(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+
+  }
+
+
+
 }
