@@ -1,5 +1,6 @@
 <div id="app">
-  <app-settings (pubsAdded)="onPubsAdded()" (isMenuOpen)="onSidenavClick()"> </app-settings>
+  <app-settings (pubsAdded)="onPubsAdded($event)" (isMenuOpen)="onSidenavClick()" (indexAdded)="onIndexAdded($event)">
+  </app-settings>
 <mat-sidenav-container>
 
   <mat-sidenav mode="side" [(opened)]="isMenuOpen" class="sidenav" (click)="onSidenavClick()">
@@ -18,4 +19,5 @@
   </mat-sidenav-content>
   
 </mat-sidenav-container>
+  
 </div>

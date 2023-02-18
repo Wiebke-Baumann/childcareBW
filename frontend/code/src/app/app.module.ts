@@ -13,8 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatSidenavModule} from '@angular/material/sidenav'; 
 import {MatIconModule} from '@angular/material/icon'; 
-
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
 
 // own components
 import { AppComponent } from './app.component';
@@ -34,8 +33,10 @@ import { SettingsComponent } from './settings/settings.component';
     ReactiveFormsModule,
     MatButtonModule,
     HttpClientModule,
+    
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent],
