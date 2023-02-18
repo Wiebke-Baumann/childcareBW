@@ -1,6 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import 'leaflet.markercluster';
 
+import { MarkerClusterGroup } from "leaflet";
+// import {MarkerClusterGroup} from "leaflet.markercluster";
+
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 @Component({
   selector: 'app-map',
@@ -52,6 +58,7 @@ export class MapComponent implements OnInit {
     this.amenitiesLayer = L.layerGroup(markers);
     markers.forEach((m) => m.addTo(this.amenitiesLayer));
     this.map.addLayer(this.amenitiesLayer);
+
   }
 
   /**
@@ -99,6 +106,8 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
   }
 
+  // readonly cluster = L.markerClusterGroup();
+  readonly cluster = new MarkerClusterGroup();
 
   /**
    * Add a marker at the specified position to the map.
@@ -110,9 +119,13 @@ export class MapComponent implements OnInit {
    */
 
   public addMarker(latitude: number, longitude: number, children_kiga_age: number, occupancy_rate: number, name: string): void {
-    const marker = L.marker([latitude, longitude]).bindPopup(name + children_kiga_age + occupancy_rate);
+    const marker = this.cluster.addLayer(L.marker([latitude, longitude]).bindPopup(name + children_kiga_age + occupancy_rate));
     marker.addTo(this.map);
-    }
+    this.map.addLayer(this.cluster)
+  }
 
   }
+
+
+
 
