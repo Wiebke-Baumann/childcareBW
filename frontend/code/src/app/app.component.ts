@@ -23,21 +23,32 @@ export class AppComponent {
   constructor(private dataservice: DataService) {}
 
   
-  
+
 
   /*
    * Retrieve pubs from backend and override the member variable.
    */
-  onPubsAdded() {
-    this.dataservice.getPubs().subscribe((pubs) => {
-      this.amenities = pubs;
-    });
+  onPubsAdded(show: boolean) {
+    if (show) {
+      this.dataservice.getPubs().subscribe((pubs) => {
+        this.amenities = pubs;
+      });
+    } else {
+      this.amenities = [];
+    }
   }
 
-  onIndexAdded(): void{
-    this.dataservice.getIndex().subscribe((geojson: FeatureCollection) =>{
-      this.map.addGeoJSON(geojson);
+  onIndexAdded(show: boolean): void{
+    if (show){
+      this.dataservice.getIndex().subscribe((geojson: FeatureCollection) =>{
+            this.map.addGeoJSON(geojson);
     });
+    }
+    else{
+      this.map.removeIndex()
+    }
+    
+    
   };
   
 }

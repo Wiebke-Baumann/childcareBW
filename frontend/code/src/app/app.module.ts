@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
 
 // own components
 import { AppComponent } from './app.component';
@@ -25,7 +26,8 @@ import { SettingsComponent } from './settings/settings.component';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent],

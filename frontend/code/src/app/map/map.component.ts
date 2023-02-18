@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import * as d3 from 'd3';
-
+import { cluster } from 'd3';
 
 
 @Component({
@@ -13,6 +13,7 @@ import * as d3 from 'd3';
 export class MapComponent implements OnInit {
   private map!: L.Map;
   private amenitiesLayer: L.LayerGroup<any> = L.layerGroup();
+  public layerGroup = new L.LayerGroup();
 
   private _amenities: {
     name: string;
@@ -70,8 +71,9 @@ export class MapComponent implements OnInit {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
+  
   }
-
+  ;
 
   /**
    * Add a marker at the specified position to the map.
@@ -116,45 +118,56 @@ export class MapComponent implements OnInit {
    * Add a GeoJSON FeatureCollection to this map
    * @param latitude
    */
+  
   public addGeoJSON(geojson: FeatureCollection): void {
-    // popup for each cell
-    const onEachFeature = (feature: Feature<Geometry, any>, layer: L.Layer) => {
-      if (
-        feature.properties &&
-        typeof feature.properties.index !== 'undefined'
-      ) {
-        layer.bindPopup('<b>' + 'Id: ' + '</b>' + feature.id + '<br>' + '<b>' + "Index:" + '</b>' + feature.properties.index)
+    console.log(this.layerGroup.getLayers.length);
+    if(this.layerGroup.getLayers.length==0) {
+      // popup for each cell
+      const onEachFeature = (feature: Feature<Geometry, any>, layer: L.Layer) => {
+        if (
+          feature.properties &&
+          typeof feature.properties.index !== 'undefined'
+        ) {
+          layer.bindPopup('<b>' + 'Id: ' + '</b>' + feature.id + '<br>' + '<b>' + "Index:" + '</b>' + feature.properties.index)
 
-        ;
-      }
-    };
-
-    // rescaling to 0,1
-    const colorscale = d3.scaleLinear().domain([0, 6]);
-
-    // each feature has a custom color
-    const style = (feature: Feature<Geometry, any> | undefined) => {
-      const index = feature?.properties?.index;
-        
-      // the color scale
-      const color = d3.interpolateBuGn(colorscale(index));
-
-      // tbh I am not sure what this does 
-      return {
-        fillColor: color,
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.7,
+          ;
+        }
       };
-    };
 
-    const geoJSON = L.geoJSON(geojson, {
-      onEachFeature,
-      style,
-    });
-    geoJSON.addTo(this.map);
+      // rescaling to 0,1
+      const colorscale = d3.scaleLinear().domain([0, 6]);
+
+      // each feature has a custom color
+      const style = (feature: Feature<Geometry, any> | undefined) => {
+        const index = feature?.properties?.index;
+          
+        // the color scale
+        const color = d3.interpolateBuGn(colorscale(index));
+
+        
+        return {
+          fillColor: color,
+          weight: 2,
+          opacity: 1,
+          color: '',
+          // corlor: 'white' for withe border
+          dashArray: '3',
+          fillOpacity: 0.7,
+        };
+      };
+
+      const geoJSON = L.geoJSON(geojson, {
+        onEachFeature,
+        style,
+      });
+      this.layerGroup.addLayer(geoJSON);
+    }
+    this.layerGroup.addTo(this.map)
+  }
+
+  // the function to remove the layer
+  public removeIndex(){
+    this.map.removeLayer(this.layerGroup);
   }
 } 
 

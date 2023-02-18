@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-settings',
@@ -14,15 +15,13 @@ export class SettingsComponent {
   @Output()
   pubsAdded: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-
-  // location form stores and validates the inputs from our forms defined in the html document
-  addPubs(): void {
-    this.pubsAdded.emit(true);
+  changePubs(show: boolean): void {
+    this.pubsAdded.emit(show);
   }
 
   @Output()
   indexAdded: EventEmitter<boolean> = new EventEmitter<boolean>();
-  addIndex(): void{
-    this.indexAdded.emit(true);
+  addIndex(show: boolean): void{
+    this.indexAdded.emit(show);
   }
 }

@@ -1,10 +1,18 @@
 <div id="settings-panel">
 
   <div class="pubs">
-    <button class="button" (click)="addPubs()" color="primary" mat-stroked-button>Show Kindergartens</button>
-    <button class ="button" (click)="addIndex()" color="primary" mat-stroked-button>Show Index</button>
-    <button class ="button" color="primary" mat-stroked-button>Show Population</button>
-
+    <mat-button-toggle-group name="settings" aria-label="settings" multiple>
+      <mat-button-toggle value="Kindergartens"
+        (change)="changePubs($event.source._checked)">Kindergartens</mat-button-toggle>
+      <mat-button-toggle value="Index" (change)="addIndex($event.source._checked)">Index</mat-button-toggle>
+      <mat-button-toggle value="Population">Population</mat-button-toggle>
+    </mat-button-toggle-group>
+    <!-- 
+      <button class="button" (click)="addPubs()" color="primary" mat-stroked-button>Show Kindergartens</button>
+      <button class ="button" (click)="addIndex()" color="primary" mat-stroked-button>Show Index</button>
+      <button class ="button" color="primary" mat-stroked-button>Show Population</button>
+    -->
+    
   </div>
 </div>
 
