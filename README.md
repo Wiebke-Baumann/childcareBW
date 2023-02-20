@@ -1,6 +1,7 @@
 # childcareBW
 
 Childcare Infrastructure in Baden-Württemberg
+<br>
 A project by 
 Elena Putilova,
 Wiebke Baumann,
@@ -20,6 +21,7 @@ OpenStreetMap for the Kindergartens
 Requirements:
 - Docker
 - pgAdmin
+<br>
 Create a virtual environment or use the example given
 ````
 cp example.env .env

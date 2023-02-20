@@ -155,16 +155,37 @@ export class MapComponent implements OnInit {
         }
       };
 
-      // rescaling to 0,1
-      const colorscale = d3.scaleLinear().domain([0, 6]);
+
 
       // each feature has a custom color
       const style = (feature: Feature<Geometry, any> | undefined) => {
         const index = feature?.properties?.index;
-          
+        var color = ""
         // the color scale
-        const color = d3.interpolateBuGn(colorscale(index));
-
+        switch(index){
+          case 0:
+            color = '#FFFFFF'
+            break;
+          case 1: 
+            color = '#FF0D0D'
+            break;
+          case 2:
+            color = '#FF4E11'
+            break;
+          case 3:
+            color = '#FF8E15'
+            break;
+          case 4:
+            color = '#FAB733'
+            break;
+          case 5:
+            color = '#ACB334'
+            break;
+          case 6:
+            color = '#69B34C'
+            break;
+          
+        }
         
         return {
           fillColor: color,
