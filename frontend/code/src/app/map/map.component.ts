@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import * as d3 from 'd3';
 import { cluster } from 'd3';
+import {Legend, Swatches} from "@d3/color-legend"
 
 import 'leaflet.markercluster';
 
@@ -22,22 +23,43 @@ export class MapComponent implements OnInit {
   private map!: L.Map;
   private amenitiesLayer: L.LayerGroup<any> = L.layerGroup();
   public layerGroup = new L.LayerGroup();
+  public layerGroupP = new L.LayerGroup();
+  public markerC = L.markerClusterGroup({
+    iconCreateFunction: function(cluster){
+      var childMarkers = cluster.getAllChildMarkers();
+      var colors = {"#6FCB9F":0,'#FFFEB3':0,'#FE9076':0,'#FB2E01':0, };
+
+    for (var i=0; i< childMarkers.length;i++){
+          colors[String(childMarkers[i].options.color)] +=1;
+      }
+      console.log(colors);
+      var  max = Object.keys(colors).reduce((a, b) => colors[a] > colors[b] ? a : b);
+      console.log(max);
+      var count = childMarkers.length;
+      return  new L.DivIcon({ iconSize: new L.Point(40, 40), html: '<div ><span>' + count, className: 'mycluster'})
+      
+    }
+  });
+
+/**
+**/
 
   private _amenities: {
     name: string;
+    id: string;
     latitude: number;
     longitude: number;
     children_kiga_age: number;
     occupancy_rate: number;
   }[] = [];
 
-    get amenities(): {name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[] {
+    get amenities(): {name: string; id: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[] {
     return this._amenities;
   }
 
   @Input()
     set amenities(
-    value: {name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[]
+    value: {name: string; id:string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[]
   ) {
     this._amenities = value;
     this.updateAmenitiesLayer();
@@ -50,19 +72,20 @@ export class MapComponent implements OnInit {
 
     // remove old amenities
     this.map.removeLayer(this.amenitiesLayer);
-
     
     // create a marker for each supplied amenity
     const markers = this.amenities.map((a) =>
       L.circleMarker([a.latitude, a.longitude], {color: this.choseColors(a.occupancy_rate), fillOpacity: 1})
-      .bindPopup('<b>' + 'Name: ' + '</b>' + a.name + '<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
+      .bindPopup('<b>' + 'Name: ' + '</b>' + a.name  + '<br>' + '<b>' + "id:" + '</b>'+ a.id +'<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
     );
 
     
     // create a new layer group and add it to the map
-    this.amenitiesLayer = L.layerGroup(markers);
-    markers.forEach((m) => m.addTo(this.amenitiesLayer));
-    this.map.addLayer(this.amenitiesLayer);
+    //this.amenitiesLayer = L.layerGroup(markers);
+   // markers.forEach((m) => m.addTo(this.amenitiesLayer));
+    markers.forEach((m)=> this.markerC.addLayer(m) )
+    this.map.addLayer(this.markerC)
+    //this.map.addLayer(this.amenitiesLayer);
 
   }
 
@@ -114,7 +137,7 @@ export class MapComponent implements OnInit {
   ;
 
   // readonly cluster = L.markerClusterGroup();
-  readonly cluster = new MarkerClusterGroup();
+  public cluster = new MarkerClusterGroup();
 
   /**
    * Add a marker at the specified position to the map.
@@ -141,7 +164,6 @@ export class MapComponent implements OnInit {
    */
   
   public addGeoJSON(geojson: FeatureCollection): void {
-    console.log(this.layerGroup.getLayers.length);
     if(this.layerGroup.getLayers.length==0) {
       // popup for each cell
       const onEachFeature = (feature: Feature<Geometry, any>, layer: L.Layer) => {
@@ -149,7 +171,8 @@ export class MapComponent implements OnInit {
           feature.properties &&
           typeof feature.properties.index !== 'undefined'
         ) {
-          layer.bindPopup('<b>' + 'Id: ' + '</b>' + feature.id + '<br>' + '<b>' + "Index:" + '</b>' + feature.properties.index)
+          layer.bindPopup('<b>' + "Index: " + '</b>' + feature.properties.index + '<br>' + '<b>'   +"nr_children: " + '</b>'  +feature.properties.nr_children_kiga_age
+          + '<br>' + '<b>'  + "Kindergartens in reach: " + '</b>' +feature.properties.nr_kinga_in_reach + '<br>' + '<b>'  + "id:"+ '</b>'  +feature.id )
 
           ;
         }
@@ -176,10 +199,10 @@ export class MapComponent implements OnInit {
             color = '#FF8E15'
             break;
           case 4:
-            color = '#FAB733'
+            color = '#ACB334'
             break;
           case 5:
-            color = '#ACB334'
+            color = '#69B34C'
             break;
           case 6:
             color = '#69B34C'
@@ -210,7 +233,70 @@ export class MapComponent implements OnInit {
   public removeIndex(){
     this.map.removeLayer(this.layerGroup);
   }
-} 
+
+
+    /**
+   * Code for Index Population Map
+   * 
+   * Add a GeoJSON FeatureCollection to this map
+   * @param latitude
+   */
+  
+  public addPupulation(geojson: FeatureCollection): void {
+    if(this.layerGroupP.getLayers.length==0) {
+      // popup for each cell
+      const onEachFeature = (feature: Feature<Geometry, any>, layer: L.Layer) => {
+        if (
+          feature.properties &&
+          typeof feature.properties.index !== 'undefined'
+        ) {
+          layer.bindPopup('<b>' + "Index: " + '</b>' + feature.properties.index + '<br>' + '<b>'   +"nr_children: " + '</b>'  +feature.properties.children
+          + '<br>' + '<b>'  + "Total Population: " + '</b>' +feature.properties.population + '<br>' + '<b>'  + "id:"+ '</b>'  +feature.id)
+
+          ;
+        }
+      };
+      const colorscale = d3.scaleLinear().domain([0, 23383]).range([0,100]);
+
+    
+
+
+
+      // each feature has a custom color
+      const style = (feature: Feature<Geometry, any> | undefined) => {
+        const pop = feature?.properties?.population;
+        const color = d3.interpolateGreens(colorscale(pop));
+      
+        
+        return {
+          fillColor: color,
+          weight: 2,
+          opacity: 1,
+          color: 'white',
+          dashArray: '3',
+          fillOpacity: 0.7,
+        };
+      };
+
+      const geoJSON = L.geoJSON(geojson, {
+        onEachFeature,
+        style,
+      });
+      this.layerGroupP.addLayer(geoJSON);
+    }
+    this.layerGroupP.addTo(this.map)
+  }
+  
+
+  // the function to remove the layer
+  public removeIndexP(){
+    this.map.removeLayer(this.layerGroupP);
+  }
+
+  
+
+}
+ 
 
 
 

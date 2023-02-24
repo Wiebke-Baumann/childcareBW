@@ -28,6 +28,13 @@ export class SettingsComponent {
   addIndex(show: boolean): void{
     this.indexAdded.emit(show);
   }
+
+  // code for the Population
+  @Output()
+  PopulationAdded: EventEmitter<boolean> = new EventEmitter<boolean>();
+  addPopulation(show: boolean): void{
+    this.PopulationAdded.emit(show);
+  }
   
 
   // For the Sidenavigation

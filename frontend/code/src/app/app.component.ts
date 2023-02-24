@@ -14,7 +14,7 @@ export class AppComponent {
   @ViewChild(MapComponent) map!: MapComponent;
 
   // option 2: use @Input() in the child component
-  amenities: { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;}[] = [];
+  amenities: { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number; id: string}[] = [];
 
 
   /*
@@ -58,6 +58,17 @@ export class AppComponent {
     
     
   };
+
+  onPopulationAdded(show:boolean): void{
+    if(show){
+      this.dataservice.getPopulation().subscribe((geojson:FeatureCollection)=>{
+        this.map.addPupulation(geojson)
+      });
+    }
+    else{
+      this.map.removeIndexP()
+    }
+  }
   
 
  

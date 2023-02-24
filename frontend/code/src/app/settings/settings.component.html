@@ -8,7 +8,7 @@
       <mat-button-toggle value="Kindergartens"
         (change)="changePubs($event.source._checked)">Kindergartens</mat-button-toggle>
       <mat-button-toggle value="Index" (change)="addIndex($event.source._checked)">Index</mat-button-toggle>
-      <mat-button-toggle value="Population">Population</mat-button-toggle>
+      <mat-button-toggle value="Population" (change)="addPopulation($event.source._checked)">Population</mat-button-toggle>
     </mat-button-toggle-group>
     <!-- 
       <button class="button" (click)="addPubs()" color="primary" mat-stroked-button>Show Kindergartens</button>

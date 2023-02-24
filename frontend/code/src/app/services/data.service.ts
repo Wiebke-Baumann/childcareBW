@@ -20,11 +20,11 @@ export class DataService {
    * Get Pubs from Backend
    */
   public getPubs(): Observable<
-    { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number}[]
+    { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number; id: string}[]
   > {
     const url = 'http://localhost:5000/pubs';
     return this.http.post<
-      { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number; }[]
+      { name: string; latitude: number; longitude: number; children_kiga_age: number; occupancy_rate: number;id:string }[]
     >(url, {}, httpOptions);
   }
 
@@ -35,4 +35,11 @@ export class DataService {
     const url = 'http://localhost:5000/choropleth';
     return this.http.post<FeatureCollection>(url, {}, httpOptions);
   }
+
+  // get the population Data
+  public getPopulation():Observable<FeatureCollection> {
+    const url = 'http://localhost:5000/population';
+    return this.http.post<FeatureCollection>(url, {}, httpOptions);
+  }
+
 }
