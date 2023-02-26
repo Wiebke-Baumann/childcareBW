@@ -15,6 +15,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon'; 
 import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
 
+
+
 // own components
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
