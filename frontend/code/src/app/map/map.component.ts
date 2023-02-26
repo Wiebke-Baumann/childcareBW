@@ -3,7 +3,6 @@ import * as L from 'leaflet';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import * as d3 from 'd3';
 import { cluster } from 'd3';
-import "color-legend-element";
 
 import 'leaflet.markercluster';
 
@@ -12,7 +11,6 @@ import { MarkerClusterGroup } from "leaflet";
 
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import { ColorLegendElement } from 'color-legend-element';
 
 @Component({
   selector: 'app-map',
@@ -40,7 +38,7 @@ export class MapComponent implements OnInit {
       var  max = Object.keys(colors).reduce((a, b) => colors[a] > colors[b] ? a : b);
       console.log(max);
       var count = childMarkers.length;
-      return  new L.DivIcon({ iconSize: new L.Point(40, 40), html: '<div ><span >' + count})
+      return  new L.DivIcon({ iconSize: new L.Point(40, 40), html: '<div ><span >' + count, className: 'mycluster'})
       
     }
   });
@@ -254,9 +252,6 @@ export class MapComponent implements OnInit {
         }
       };
       const colorscale = d3.scaleLinear().domain([0, 23383]).range([0,100]);
-      var colorlegend = new ColorLegendElement();
-      colorlegend.titleText = "Population";
-      colorlegend.domain = [0,23383];
 
     
 

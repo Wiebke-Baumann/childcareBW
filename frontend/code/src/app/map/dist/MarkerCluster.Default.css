@@ -18,13 +18,6 @@
 .marker-cluster-large div {
 	background-color: rgba(241, 128, 23, 0.6);
 	}
-.marker-cluster-a {
-	background-color: rgba(253, 156, 115, 0.6);
-}
-
-.marker-cluster-a div {
-	background-color: rgba(241, 128, 23, 0.6);
-}
 
 	/* IE 6-8 fallback colors */
 .leaflet-oldie .marker-cluster-small {
@@ -48,13 +41,6 @@
 	background-color: rgb(241, 128, 23);
 }
 
-.leaflet-oldie .marker-cluster-a {
-	background-color: rgba(253, 156, 115, 0.6);
-}
-
-.leaflet-oldie .marker-cluster-a div {
-	background-color: rgba(241, 128, 23, 0.6);
-}
 .marker-cluster {
 	background-clip: padding-box;
 	border-radius: 20px;
