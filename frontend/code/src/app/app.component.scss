@@ -9,9 +9,10 @@ mat-sidenav-container{
 }
 
 mat-sidenav{
-    width: 200px;
-    background-color: white;
-        margin-left: 10px;
+    width: 300px;
+    background-color: rgb(222, 222, 222);
+    padding: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.35);
 }
 
 .Legend-colorBox {
@@ -19,4 +20,10 @@ mat-sidenav{
     height: 1.5rem;
     display: inline-block;
     background-color: blue;
+    border: 1px solid #000000;
 }
+
+.Legend-label {
+    padding: 5px;
+    vertical-align: top; 
+   }
