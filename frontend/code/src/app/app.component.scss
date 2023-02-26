@@ -10,8 +10,10 @@ mat-sidenav-container{
 
 mat-sidenav{
     width: 200px;
-    background-color: white;
-        margin-left: 10px;
+    background-color: rgb(180, 185, 186);
+    margin-left: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+
 }
 
 .Legend-colorBox {

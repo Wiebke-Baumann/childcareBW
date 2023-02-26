@@ -7,20 +7,26 @@
 
   <mat-sidenav mode="side" [(opened)]="isMenuOpen" class="sidenav" (click)="onSidenavClick()">
     <h1>
-      Childcare infrastructure in Baden Württemberg
+    
+      Childcare Infrastructure in Baden-Württemberg
+  
 
     </h1>
-    
-    Created by Elena, Nele and Wiebke
+
+    Created by Wiebke Baumann, Nele Hapig and Elena Putilova
+   
     <h2>
       <br>
-      Legend for Kindergarten
+      
+      Childcare Index:
+   
       </h2>
       
       
       <span class="Legend-colorBox" style="background-color: #1E8445">
       </span>
       <span class="Legend-label">
+       
         not overcrowded
       </span>
       <br>
@@ -50,35 +56,33 @@
       <span class="Legend-label">
         No kindergartens
       </span>
+     
       <br>
       
       <h2>
+       
         Data sources
+     
       </h2>
       <h3>
-        kindergartens
+      
+        Kindergarten Data:
+      
       </h3>
-      - Open Streetmap
+      
+      - Geo-Data by Openstreetmap.org 
       <br>
-      - Extraction via Overpass Turbo
-      <br>
-      - n = 6178 Kindergartens in Baden Württemberg
+      - N = 6178
+   
       <br>
       <h3>
-      
-        Population Data
+        
+        Population Data:
+        
       </h3>
-      - From Zensus 2011
+      - Zensus 2011 (children aged 1-6 years)
       <br>
       - Aggregated from 1sqm to 1 sqmk
-      <br>
-      - Reduced all children at the age under the age of ten to kindergarten age (1-6)
-      <br>
-      
-      - Mean 43 children
-      <br>
-      - Median 3 children
-
 
   </mat-sidenav>
 
