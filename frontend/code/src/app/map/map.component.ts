@@ -3,7 +3,6 @@ import * as L from 'leaflet';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import * as d3 from 'd3';
 import { cluster } from 'd3';
-import {Legend, Swatches} from "@d3/color-legend"
 
 import 'leaflet.markercluster';
 
@@ -19,6 +18,8 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
   styleUrls: ['./map.component.scss'],
 })
 
+
+
 export class MapComponent implements OnInit {
   private map!: L.Map;
   private amenitiesLayer: L.LayerGroup<any> = L.layerGroup();
@@ -27,16 +28,17 @@ export class MapComponent implements OnInit {
   public markerC = L.markerClusterGroup({
     iconCreateFunction: function(cluster){
       var childMarkers = cluster.getAllChildMarkers();
-      var colors = {"#6FCB9F":0,'#FFFEB3':0,'#FE9076':0,'#FB2E01':0, };
+      var colors = {"#1E8445":0,'#41d97b':0,'#ede657':0,'#f55433':0 };
 
     for (var i=0; i< childMarkers.length;i++){
           colors[String(childMarkers[i].options.color)] +=1;
+
       }
       console.log(colors);
       var  max = Object.keys(colors).reduce((a, b) => colors[a] > colors[b] ? a : b);
       console.log(max);
       var count = childMarkers.length;
-      return  new L.DivIcon({ iconSize: new L.Point(40, 40), html: '<div ><span>' + count, className: 'mycluster'})
+      return  new L.DivIcon({ iconSize: new L.Point(40, 40), html: '<div ><span >' + count, className: 'mycluster'})
       
     }
   });
@@ -98,21 +100,25 @@ export class MapComponent implements OnInit {
     let colorMarker = "";
       // kindergartens that are not overcrowded
       if (occupancy_rate < 1) {
-        colorMarker = "#6FCB9F";
+        //colorMarker = "#6FCB9F";
+        colorMarker = '#1E8445';
       }
       // slightly overcrowded kindergartens
       else if (occupancy_rate > 1 && occupancy_rate < 1.2) {
-        colorMarker = "#FFFEB3";
+        //colorMarker = "#FFFEB3";
+        colorMarker = '#41d97b';
       }
 
       // medium overcrowded kindergartens
       else if (occupancy_rate > 1.2 && occupancy_rate < 2) {
-        colorMarker = "#FE9076";
+        //colorMarker = "#FE9076";
+        colorMarker = '#ede657';
       }
 
       // strongly overcrowded kindergartens
       else {
-        colorMarker = "#FB2E01";
+        //colorMarker = "#FB2E01";
+        colorMarker = "#f55433";
       }
 
       return colorMarker;
@@ -136,23 +142,7 @@ export class MapComponent implements OnInit {
   }
   ;
 
-  // readonly cluster = L.markerClusterGroup();
-  public cluster = new MarkerClusterGroup();
 
-  /**
-   * Add a marker at the specified position to the map.
-   * @param latitude
-   * @param longitude
-   * @param name
-   * @param children_kiga_age
-   * @param occupancy_rate
-   */
-
-  public addMarker(latitude: number, longitude: number, children_kiga_age: number, occupancy_rate: number, name: string): void {
-    const marker = this.cluster.addLayer(L.marker([latitude, longitude]).bindPopup(name + children_kiga_age + occupancy_rate));
-    marker.addTo(this.map);
-    this.map.addLayer(this.cluster)
-  }
 
   
 
@@ -190,19 +180,24 @@ export class MapComponent implements OnInit {
             color = '#FFFFFF'
             break;
           case 1: 
-            color = '#FF0D0D'
+            //color = '#FF0D0D'
+            color = '#ba0707'
             break;
           case 2:
-            color = '#FF4E11'
+            //color = '#FF4E11'
+            color = '#f55433'
             break;
           case 3:
-            color = '#FF8E15'
+            //color = '#FF8E15'
+            color = '#ede657'
             break;
           case 4:
-            color = '#ACB334'
+            //color = '#ACB334'
+            color = '#41d97b'
             break;
           case 5:
-            color = '#69B34C'
+            //color = '#69B34C'
+            color = '#1E8445'
             break;
           case 6:
             color = '#69B34C'
@@ -266,7 +261,8 @@ export class MapComponent implements OnInit {
       const style = (feature: Feature<Geometry, any> | undefined) => {
         const pop = feature?.properties?.population;
         const color = d3.interpolateGreens(colorscale(pop));
-      
+
+    
         
         return {
           fillColor: color,

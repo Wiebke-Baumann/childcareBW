@@ -10,5 +10,15 @@ mat-sidenav-container{
 
 mat-sidenav{
     width: 200px;
-    background-color: cadetblue;
+    background-color: rgb(180, 185, 186);
+    margin-left: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+
+}
+
+.Legend-colorBox {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-block;
+    background-color: blue;
 }

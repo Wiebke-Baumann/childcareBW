@@ -1,21 +1,96 @@
 <div id="app">
-  <app-settings (pubsAdded)="onPubsAdded($event)" (isMenuOpen)="onSidenavClick()" (indexAdded)="onIndexAdded($event)">
+  <app-settings (pubsAdded)="onPubsAdded($event)" (isMenuOpen)="onSidenavClick()" (indexAdded)="onIndexAdded($event)"
+    (PopulationAdded)="onPopulationAdded($event)">
   </app-settings>
+
 <mat-sidenav-container>
 
   <mat-sidenav mode="side" [(opened)]="isMenuOpen" class="sidenav" (click)="onSidenavClick()">
     <h1>
-      Childcare infrastructure in Baden Württemberg
+      <p style="font-family: Verdana">
+      Childcare Infrastructure in Baden-Württemberg
+    </p>
+
     </h1>
-    
-    Created by Elena Putilova, Nele Hapig and Wiebke Baumann
-    <br>
+    <p style="font-family: Verdana">
+    Created by Wiebke Baumann, Nele Hapig and Elena Putilova
+    </p>
+    <h2>
+      <br>
+      <p style="font-family: Verdana">
+      Childcare Index:
+      </p>
+      </h2>
+      
+      
+      <span class="Legend-colorBox" style="background-color: #1E8445">
+      </span>
+      <span class="Legend-label">
+        <p style="font-family: Verdana">
+        not overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #41d97b;">
+      </span>
+      <span class="Legend-label">
+        slightly overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #ede657;">
+      </span>
+      <span class="Legend-label">
+        medium overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #f55433;">
+      
+      </span>
+      
+      <span class="Legend-label">
+        strongly overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #ba0707;">
+      
+      </span>
+      <span class="Legend-label">
+        No kindergartens
+      </span>
+     </p>
+      <br>
+      
+      <h2>
+        <p style="font-family: Verdana">
+        Data sources
+      </p>
+      </h2>
+      <h3>
+        <p style="font-family: Verdana">
+        Kindergarten Data:
+      </p>
+      </h3>
+      <p style="font-family: Verdana">
+      - Geo-Data by Openstreetmap.org 
+      <br>
+      - N = 6178
+    </p>
+      <br>
+      <h3>
+        <p style="font-family: Verdana">
+        Population Data:
+      </p>
+      </h3>
+      <p style="font-family: Verdana">
+      - Zensus 2011 (children aged 1-6 years)
+      <br>
+      - Aggregated from 1sqm to 1 sqmk
+    </p>
 
   </mat-sidenav>
 
   <mat-sidenav-content>
     
-      <app-map [amenities]="this.amenities"> </app-map>
+      <app-map [amenities]="this.amenities" [colorLegend]="this.colorLegend"> </app-map>
   </mat-sidenav-content>
   
 </mat-sidenav-container>
