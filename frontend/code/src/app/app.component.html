@@ -1,21 +1,90 @@
 <div id="app">
-  <app-settings (pubsAdded)="onPubsAdded($event)" (isMenuOpen)="onSidenavClick()" (indexAdded)="onIndexAdded($event)">
+  <app-settings (pubsAdded)="onPubsAdded($event)" (isMenuOpen)="onSidenavClick()" (indexAdded)="onIndexAdded($event)"
+    (PopulationAdded)="onPopulationAdded($event)">
   </app-settings>
+
 <mat-sidenav-container>
 
   <mat-sidenav mode="side" [(opened)]="isMenuOpen" class="sidenav" (click)="onSidenavClick()">
     <h1>
       Childcare infrastructure in Baden Württemberg
+
     </h1>
     
     Created by Elena, Nele and Wiebke
-    <br>
+    <h2>
+      <br>
+      Legend for Kindergarten
+      </h2>
+      
+      
+      <span class="Legend-colorBox" style="background-color: #1E8445">
+      </span>
+      <span class="Legend-label">
+        not overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #41d97b;">
+      </span>
+      <span class="Legend-label">
+        slightly overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #ede657;">
+      </span>
+      <span class="Legend-label">
+        medium overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #f55433;">
+      
+      </span>
+      
+      <span class="Legend-label">
+        strongly overcrowded
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #ba0707;">
+      
+      </span>
+      <span class="Legend-label">
+        No kindergartens
+      </span>
+      <br>
+      
+      <h2>
+        Data sources
+      </h2>
+      <h3>
+        kindergartens
+      </h3>
+      - Open Streetmap
+      <br>
+      - Extraction via Overpass Turbo
+      <br>
+      - n = 6178 Kindergartens in Baden Württemberg
+      <br>
+      <h3>
+      
+        Population Data
+      </h3>
+      - From Zensus 2011
+      <br>
+      - Aggregated from 1sqm to 1 sqmk
+      <br>
+      - Reduced all children at the age under the age of ten to kindergarten age (1-6)
+      <br>
+      
+      - Mean 43 children
+      <br>
+      - Median 3 children
+
 
   </mat-sidenav>
 
   <mat-sidenav-content>
     
-      <app-map [amenities]="this.amenities"> </app-map>
+      <app-map [amenities]="this.amenities" [colorLegend]="this.colorLegend"> </app-map>
   </mat-sidenav-content>
   
 </mat-sidenav-container>
