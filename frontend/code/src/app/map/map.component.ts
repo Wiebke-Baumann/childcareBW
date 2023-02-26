@@ -2,15 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import * as d3 from 'd3';
-import { cluster } from 'd3';
 
-import 'leaflet.markercluster';
-
-import { MarkerClusterGroup } from "leaflet";
-// import {MarkerClusterGroup} from "leaflet.markercluster";
-
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 @Component({
   selector: 'app-map',
@@ -25,23 +17,7 @@ export class MapComponent implements OnInit {
   private amenitiesLayer: L.LayerGroup<any> = L.layerGroup();
   public layerGroup = new L.LayerGroup();
   public layerGroupP = new L.LayerGroup();
-  public markerC = L.markerClusterGroup({
-    iconCreateFunction: function(cluster){
-      var childMarkers = cluster.getAllChildMarkers();
-      var colors = {"#1E8445":0,'#41d97b':0,'#ede657':0,'#f55433':0 };
 
-    for (var i=0; i< childMarkers.length;i++){
-          colors[String(childMarkers[i].options.color)] +=1;
-
-      }
-      console.log(colors);
-      var  max = Object.keys(colors).reduce((a, b) => colors[a] > colors[b] ? a : b);
-      console.log(max);
-      var count = childMarkers.length;
-      return  new L.DivIcon({ iconSize: new L.Point(40, 40), html: '<div ><span >' + count, className: 'mycluster'})
-      
-    }
-  });
 
 /**
 **/
@@ -78,16 +54,15 @@ export class MapComponent implements OnInit {
     // create a marker for each supplied amenity
     const markers = this.amenities.map((a) =>
       L.circleMarker([a.latitude, a.longitude], {color: this.choseColors(a.occupancy_rate), fillOpacity: 1})
-      .bindPopup('<b>' + 'Name: ' + '</b>' + a.name  + '<br>' + '<b>' + "id:" + '</b>'+ a.id +'<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
+      .bindPopup('<b>' + 'Name: ' + '</b>' + a.name  + '<br>' + '<b>' + "Children within 5km: " + '</b>' + a.children_kiga_age + '<br>' + '<b>' + 'Occupancy rate: ' +'</b>' + a.occupancy_rate )
     );
 
     
     // create a new layer group and add it to the map
-    //this.amenitiesLayer = L.layerGroup(markers);
-   // markers.forEach((m) => m.addTo(this.amenitiesLayer));
-    markers.forEach((m)=> this.markerC.addLayer(m) )
-    this.map.addLayer(this.markerC)
-    //this.map.addLayer(this.amenitiesLayer);
+    this.amenitiesLayer = L.layerGroup(markers);
+   markers.forEach((m) => m.addTo(this.amenitiesLayer));
+
+    this.map.addLayer(this.amenitiesLayer);
 
   }
 
@@ -161,8 +136,8 @@ export class MapComponent implements OnInit {
           feature.properties &&
           typeof feature.properties.index !== 'undefined'
         ) {
-          layer.bindPopup('<b>' + "Index: " + '</b>' + feature.properties.index + '<br>' + '<b>'   +"nr_children: " + '</b>'  +feature.properties.nr_children_kiga_age
-          + '<br>' + '<b>'  + "Kindergartens in reach: " + '</b>' +feature.properties.nr_kinga_in_reach + '<br>' + '<b>'  + "id:"+ '</b>'  +feature.id )
+          layer.bindPopup('<b>'   +"Nr. Children (1-6 years): " + '</b>'  +feature.properties.nr_children_kiga_age
+          + '<br>' + '<b>'  + "Kindergartens in reach: " + '</b>' +feature.properties.nr_kinga_in_reach  )
 
           ;
         }
@@ -245,22 +220,47 @@ export class MapComponent implements OnInit {
           feature.properties &&
           typeof feature.properties.index !== 'undefined'
         ) {
-          layer.bindPopup('<b>' + "Index: " + '</b>' + feature.properties.index + '<br>' + '<b>'   +"nr_children: " + '</b>'  +feature.properties.children
-          + '<br>' + '<b>'  + "Total Population: " + '</b>' +feature.properties.population + '<br>' + '<b>'  + "id:"+ '</b>'  +feature.id)
+          layer.bindPopup('<b>' +"Nr. Children (1-6 years): " + '</b>'  +feature.properties.children
+          + '<br>' + '<b>'  + "Total Population: " + '</b>' +feature.properties.population)
 
           ;
         }
       };
-      const colorscale = d3.scaleLinear().domain([0, 23383]).range([0,100]);
 
     
 
 
 
-      // each feature has a custom color
+         // each feature has a custom color
       const style = (feature: Feature<Geometry, any> | undefined) => {
         const pop = feature?.properties?.population;
-        const color = d3.interpolateGreens(colorscale(pop));
+        var color = "";
+      if (pop < 1) {
+        color = '#FFF';
+      }
+      else if (pop > 0 && pop < 20) {
+        color = '#b3cde0';
+      }
+
+      else if (pop > 20 && pop < 250) {
+
+        color = '#0497b1';
+      }
+      else if (pop > 250 && pop < 1000) {
+
+        color = '#005b96';
+      }
+      else if (pop > 1000 && pop < 10000) {
+        
+        color = '#03396c';
+      }
+
+      else {
+        color = "#011f4b";
+      }
+
+  
+
 
     
         

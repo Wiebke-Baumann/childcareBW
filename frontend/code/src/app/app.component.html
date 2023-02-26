@@ -60,24 +60,76 @@
       </span>
 
       <br>
+      <br>
+      <h2>
+        Total Population:
+      </h2>
       
+      
+      
+      
+      <span class="Legend-colorBox" style="background-color: #FFF;">
+      </span>
+      <span class="Legend-label">
+        Unpulated
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #b3cde0;">
+      </span>
+      <span class="Legend-label">
+        1-20 Inhabitants
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #0497b1;">
+      </span>
+      
+      <span class="Legend-label">
+        21-250 Inhabitants
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #005b96;">
+      
+      </span>
+      <span class="Legend-label">
+        251-1,000 Inhabitants
+      </span>
+      
+      <br>
+      <span class="Legend-colorBox" style="background-color: #03396c;">
+      
+      </span>
+      <span class="Legend-label">
+        1,000-10,000 Inhabitants
+      </span>
+      <br>
+      <span class="Legend-colorBox" style="background-color: #011f4b;">
+      
+      </span>
+      <span class="Legend-label">
+        over 10,000 Inhabitants
+      </span>
+      <br>
+      <br>
       <h2>
         Data sources:
       </h2>
-      <h3>
+      <b>
         Kindergarten Data:
-      </h3>
+      </b>
+      <br>
       - Open Street Map
       <br>
       - N = 6178 Kindergartens
       <br>
-      <h3>
+      <br>
+      <b>
       
         Population Data:
-      </h3>
+      </b>
+      <br>
       - Zensus 2011
       <br>
-      - Aggregated from 1sqm to 1 sqmk
+      - Aggregated from 1sqm to 1 sqkm
       <br>
      
 
@@ -85,7 +137,7 @@
 
   <mat-sidenav-content>
     
-      <app-map [amenities]="this.amenities" [colorLegend]="this.colorLegend"> </app-map>
+      <app-map [amenities]="this.amenities"> </app-map>
   </mat-sidenav-content>
   
 </mat-sidenav-container>
