@@ -1,4 +1,5 @@
 <div id="app">
+  <app-settings (pubsAdded)="onPubsAdded($event)" (isMenuOpen)="onSidenavClick()" (indexAdded)="onIndexAdded($event)">
   <app-settings (pubsAdded)="onPubsAdded($event)" (isMenuOpen)="onSidenavClick()" (indexAdded)="onIndexAdded($event)"
     (PopulationAdded)="onPopulationAdded($event)">
   </app-settings>
@@ -7,26 +8,21 @@
 
   <mat-sidenav mode="side" [(opened)]="isMenuOpen" class="sidenav" (click)="onSidenavClick()">
     <h1>
-    
-      Childcare Infrastructure in Baden-Württemberg
-  
+      Childcare infrastructure in Baden Württemberg
 
     </h1>
 
-    Created by Wiebke Baumann, Nele Hapig and Elena Putilova
-   
+    Created by Elena, Nele and Wiebke
+    <br>
     <h2>
       <br>
-      
-      Childcare Index:
-   
+      Legend for Kindergarten
       </h2>
-      
-      
+
+
       <span class="Legend-colorBox" style="background-color: #1E8445">
       </span>
       <span class="Legend-label">
-       
         not overcrowded
       </span>
       <br>
@@ -43,54 +39,55 @@
       </span>
       <br>
       <span class="Legend-colorBox" style="background-color: #f55433;">
-      
+
       </span>
-      
+
       <span class="Legend-label">
         strongly overcrowded
       </span>
       <br>
       <span class="Legend-colorBox" style="background-color: #ba0707;">
-      
+
       </span>
       <span class="Legend-label">
         No kindergartens
       </span>
-     
       <br>
-      
+
       <h2>
-       
         Data sources
-     
       </h2>
       <h3>
-      
-        Kindergarten Data:
-      
+        kindergartens
       </h3>
-      
-      - Geo-Data by Openstreetmap.org 
+      - Open Streetmap
       <br>
-      - N = 6178
-   
+      - Extraction via Overpass Turbo
+      <br>
+      - n = 6178 Kindergartens in Baden Württemberg
       <br>
       <h3>
-        
-        Population Data:
-        
+
+        Population Data
       </h3>
-      - Zensus 2011 (children aged 1-6 years)
+      - From Zensus 2011
       <br>
       - Aggregated from 1sqm to 1 sqmk
+      <br>
+      - Reduced all children at the age under the age of ten to kindergarten age (1-6)
+      <br>
+
+      - Mean 43 children
+      <br>
+      - Median 3 children
+
 
   </mat-sidenav>
 
   <mat-sidenav-content>
-    
+
       <app-map [amenities]="this.amenities"> </app-map>
+      <app-map [amenities]="this.amenities" [colorLegend]="this.colorLegend"> </app-map>
   </mat-sidenav-content>
-  
+
 </mat-sidenav-container>
-  
-</div>
